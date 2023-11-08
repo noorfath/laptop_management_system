@@ -28,17 +28,20 @@ class DrawerEx extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               decoration: const BoxDecoration(
-                //color: Colors.purple
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage("assets/images/greennew.jpg"))),
+                color: Colors.deepPurpleAccent
+                  // image: DecorationImage(
+                  //     fit: BoxFit.cover,
+                  //     image: AssetImage("assets/icons/purplebg.jpg"))
+                     ),
               accountName: const Text("My Name",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               accountEmail: const Text("myname@gmail.com"),
-              currentAccountPicture: Image.asset("assets/images/logingirl.png"),
-              otherAccountsPictures: [Image.asset("assets/icons/apple.png")],
-            ),
+              currentAccountPicture:CircleAvatar(
+                backgroundImage:AssetImage("assets/icons/Woman.png"))
+
+              ),
+
             ListTile(
               onTap: (){},
               leading: Icon(Icons.home),
