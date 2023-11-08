@@ -1,68 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:laptop_management_system/pages/Homescreen.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
+import 'bottom navbar.dart';
+void main(){runApp(MaterialApp(home: DrawerEx(),));}
+class DrawerEx extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Drawer Example'),
+        backgroundColor: Colors.deepPurpleAccent,
+        elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {
+              // Add action for more options
+            },
+          ),
+        ],
       ),
+      //Theme(
+      //data: Theme.of(context).copyWith(canvasColor: Colors.green),
+      // child:
+      //endDrawer:
       drawer: Drawer(
         child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
+          children: [
             UserAccountsDrawerHeader(
-              accountName: Text('John Doe'),
-              accountEmail: Text('john.doe@example.com'),
-              currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.grey,
-                backgroundImage: AssetImage("assets/profile_pic.jpg"),
+              decoration: const BoxDecoration(
+                //color: Colors.purple
+                  image: DecorationImage(
+                      fit: BoxFit.cover,
+                      image: AssetImage("assets/images/greennew.jpg"))),
+              accountName: const Text("My Name",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
+              accountEmail: const Text("myname@gmail.com"),
+              currentAccountPicture: Image.asset("assets/images/logingirl.png"),
+              otherAccountsPictures: [Image.asset("assets/icons/apple.png")],
             ),
             ListTile(
+              onTap: (){},
               leading: Icon(Icons.home),
-              title: Text('Home'),
-              onTap: () {
-                // Handle navigation to the home screen
-                Navigator.pop(context); // Close the drawer
-              },
+              title: Text("Home"),
             ),
-            ListTile(
+            const ListTile(
               leading: Icon(Icons.settings),
-              title: Text('Settings'),
-              onTap: () {
-                // Handle navigation to the settings screen
-                Navigator.pop(context); // Close the drawer
-              },
+              title: Text("Settings"),
             ),
-            Divider(),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Logout'),
-              onTap: () {
-                // Handle logout
-                Navigator.pop(context); // Close the drawer
-              },
+            const ListTile(
+              leading: Icon(Icons.menu),
+              title: Text("Home"),
             ),
+
           ],
         ),
-      ),
-      body: Center(
-        child: Text('Main Content'),
-      ),
+      ), body: BottomNavBar(),
+      // ),
     );
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:laptop_management_system/pages/homescreen.dart';
 
 void main() {
   runApp(SettingsApp());
@@ -30,8 +31,8 @@ class _SettingsPageState extends State<SettingsPage> {
       debugShowCheckedModeBanner: false,
       theme: darkMode ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
-        appBar: AppBar(backgroundColor: Colors.black26,
-          leading: IconButton(onPressed: ()=>Navigator.of(context).pop(),
+        appBar: AppBar(backgroundColor: Colors.deepPurpleAccent,
+          leading: IconButton(onPressed: ()=>Navigator.of(context).push(MaterialPageRoute(builder: (context)=>Homescrren())),
               icon: Icon(Icons.arrow_back)),
           title: Text('Settings'),
         ),
