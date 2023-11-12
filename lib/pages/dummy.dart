@@ -1,147 +1,72 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class Formpage extends StatefulWidget {
-  @override
-  _FormpageState createState() => _FormpageState();
+void main() {
+  runApp(MyApp());
 }
 
-class _FormpageState extends State<Formpage> {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  TimeOfDay? selectedIssueTime;
-  TimeOfDay? selectedReturnTime;
-
-  String _computerName = '';
-  String _lapnumber = '';
-  String _Name = '';
-  String selectedValue = 'Workers'; // Initialize the selected value
-  List<String> options = ['Workers', 'Students', 'Others'];
-
-  Future<void> _selectIssueTime() async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectedIssueTime ?? TimeOfDay.now(),
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: SettingsPage(),
     );
-    if (picked != null) {
-      setState(() {
-        selectedIssueTime = picked;
-      });
-    }
+  }
+}
+
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool _isSwitched = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSettings();
   }
 
-  Future<void> _selectReturnTime() async {
-    final TimeOfDay? picked = await showTimePicker(
-      context: context,
-      initialTime: selectedReturnTime ?? TimeOfDay.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        selectedReturnTime = picked;
-      });
-    }
+  _loadSettings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      _isSwitched = prefs.getBool('isSwitched') ?? false;
+    });
+  }
+
+  _saveSettings() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isSwitched', _isSwitched);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.deepPurple,
-        title: Text('Asus'),
+        title: Text('Settings'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Form(
-            key: _formKey,
-            child: Column(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Name'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your name';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _Name = value!;
-                  },
-                ),
-
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Computer Name'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a computer name';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _computerName = value!;
-                  },
-                ),
-                TextFormField(
-                  decoration: InputDecoration(labelText: 'Lap Number'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a  Lap number';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _lapnumber = value!;
-                  },
-                ),
-                SizedBox(height: 10,),
-                DropdownButton<String>(
-                  value: selectedValue, // Set the selected value
-                  onChanged: (String? newValue) {
+                Text('Enable Feature'),
+                Switch(
+                  value: _isSwitched,
+                  onChanged: (value) {
                     setState(() {
-                      selectedValue = newValue!; // Update the selected value
+                      _isSwitched = value;
+                      _saveSettings();
                     });
                   },
-                  items: options.map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-
-                SizedBox(height: 20),
-                Row(
-                  children: [
-                    Text('Issue Time: ${selectedIssueTime?.format(context) ?? "Select Time"}'),
-                    IconButton(
-                      icon: Icon(Icons.access_time),
-                      onPressed: _selectIssueTime,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text('Return Time: ${selectedReturnTime?.format(context) ?? "Select Time"}'),
-                    IconButton(
-                      icon: Icon(Icons.access_time),
-                      onPressed: _selectReturnTime,
-                    ),
-
-                  ],
-                ),
-                ElevatedButton(style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple
-                ),
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _formKey.currentState?.save();
-                      // You can now use _Name, _computerName, _description, _specifications
-                      // and selectedIssueTime, selectedReturnTime for further processing.
-                    }
-                  },
-                  child: Text('Submit',),
                 ),
               ],
             ),
-          ),
+            // Add more settings widgets as needed
+          ],
         ),
       ),
     );
