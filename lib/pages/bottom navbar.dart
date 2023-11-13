@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:laptop_management_system/pages/Homescreen.dart';
+import 'package:laptop_management_system/pages/Profile_page.dart';
+import 'package:laptop_management_system/pages/chat.dart';
 
 import 'chatscreen.dart';
 
@@ -19,7 +21,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int index=0;
   var Screen=[
 Homescrren(),
-    ChatScreen(),
+    Screen4(),
+    Profile_page(),
 
   ];
   @override

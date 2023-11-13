@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+class Profile_page extends StatefulWidget {
+  const Profile_page({super.key});
 
-class MyApp extends StatelessWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ProfilePage(),
-    );
-  }
+  State<Profile_page> createState() => _Profil_pageState();
 }
 
-class ProfilePage extends StatelessWidget {
+class _Profil_pageState extends State<Profile_page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +21,7 @@ class ProfilePage extends StatelessWidget {
           children: [
             CircleAvatar(
               radius: 50,
-              backgroundImage: AssetImage('assets/profile_image.jpg'), // Replace with your image asset
+              backgroundImage: AssetImage('assets/icons/woman.jpg'), // Replace with your image asset
             ),
             SizedBox(height: 16),
             Text(

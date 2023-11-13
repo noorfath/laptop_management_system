@@ -33,6 +33,7 @@ dependencies:
   flutter_time_picker_spinner:
   provider:
   shared_preferences:
+  google_fonts:
 
 
   # The following adds the Cupertino Icons font to your application.
