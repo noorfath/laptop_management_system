@@ -1,58 +1,112 @@
 import 'package:flutter/material.dart';
+import 'package:laptop_management_system/pages/homescreen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(SettingsApp());
 }
 
-class MyApp extends StatelessWidget {
+class SettingsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProfilePage(),
+      debugShowCheckedModeBanner: false,
+      home: SettingsPage(),
     );
   }
 }
 
-class ProfilePage extends StatelessWidget {
+class SettingsPage extends StatefulWidget {
+  @override
+  _SettingsPageState createState() => _SettingsPageState();
+}
+
+class _SettingsPageState extends State<SettingsPage> {
+  bool pushNotifications = true;
+  bool darkMode = false;
+  double fontSize = 16.0;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Profile'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: darkMode ? ThemeData.dark() : ThemeData.light(),
+      home: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurpleAccent,
+          leading: IconButton(
+            onPressed: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => Homescrren()),
+            ),
+            icon: Icon(Icons.arrow_back),
+          ),
+          title: Text('Settings'),
+        ),
+        body: ListView(
+          padding: EdgeInsets.all(16.0),
           children: [
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/profile_image.jpg'), // Replace with your image asset
-            ),
-            SizedBox(height: 16),
-            Text(
-              'John Doe',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+            ListTile(
+              title: Text(
+                'Push Notifications',
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: Switch(
+                value: pushNotifications,
+                onChanged: (value) {
+                  setState(() {
+                    pushNotifications = value;
+                  });
+                },
               ),
             ),
-            SizedBox(height: 8),
-            Text(
-              'john.doe@example.com',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
+            ListTile(
+              title: Text(
+                'Dark Mode',
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: Switch(
+                value: darkMode,
+                onChanged: (value) {
+                  setState(() {
+                    darkMode = value;
+                  });
+                },
               ),
             ),
-            SizedBox(height: 24),
-            ElevatedButton(
-              onPressed: () {
-                // Perform sign-out logic here
-                // For example, you can navigate to the login screen
-                Navigator.pop(context); // Pop profile page off the navigation stack
+            ListTile(
+              title: Text(
+                'Font Size',
+                style: TextStyle(color: Colors.black),
+              ),
+              trailing: DropdownButton<double>(
+                value: fontSize,
+                items: [12.0, 16.0, 20.0, 24.0]
+                    .map(
+                      (size) => DropdownMenuItem<double>(
+                    value: size,
+                    child: Text(size.toString()),
+                  ),
+                )
+                    .toList(),
+                onChanged: (value) {
+                  setState(() {
+                    fontSize = value!;
+                  });
+                },
+              ),
+            ),
+            Divider(),
+            ListTile(
+              title: Text(
+                'Reset to Default',
+                style: TextStyle(color: Colors.red), // Change color as needed
+              ),
+              onTap: () {
+                setState(() {
+                  pushNotifications = true;
+                  darkMode = false;
+                  fontSize = 16.0;
+                });
               },
-              child: Text('Sign Out'),
             ),
           ],
         ),

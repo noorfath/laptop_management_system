@@ -18,18 +18,17 @@ class DrawerEx extends StatelessWidget {
       drawer: Drawer(
         child: ListView(
           children: [
-            UserAccountsDrawerHeader(
-              decoration: const BoxDecoration(
+            const UserAccountsDrawerHeader(
+              decoration: BoxDecoration(
                 color: Colors.deepPurpleAccent
                   ),
-              accountName: const Text("My Name",
+              accountName: Text("My Name",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              accountEmail: const Text("myname@gmail.com"),
+              accountEmail: Text("myname@gmail.com"),
               currentAccountPicture: CircleAvatar(
                 backgroundImage: AssetImage("assets/icons/woman.jpg"),
                  ),
-              //appBar: AppBar(title: Text("Dell"),),otherAccountsPictures: [Image.asset("assets/icons/apple.png")],
             ),
             ListTile(
                 leading: Icon(Icons.home),
